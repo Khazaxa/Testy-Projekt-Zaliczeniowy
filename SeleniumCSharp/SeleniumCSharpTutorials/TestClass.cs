@@ -14,19 +14,51 @@ namespace SeleniumCSharpTutorials
     public class TestClass : BaseTest
     {
         [Test, Category("Smoke Testing")]
+        public void InputEmailInLoginTest()
+        {
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
+            wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("input#email")));
+            IWebElement emailTextField = driver.FindElement(By.CssSelector("input#email"));
+            emailTextField.SendKeys("Selenium C#");
+        }
+
+        // Z powodu błędu poczasu używania tu SetUp i Close, test jest w takiej formie.
+        // Działa, ale gdy używam metod nie zawsze działa, ponieważ nie zawsze pojawiają się cookies
+        [Test, Category("Smoke Testing")]
+        public void ChangeMonthInRegisterTest()
+        {
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--no-sandbox");
+            options.AddArgument("--disable-dev-shm-usage");
+            options.BinaryLocation = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+
+            driver = new ChromeDriver(options);
+            driver.Manage().Window.Maximize();
+            driver.Url = "https://www.facebook.com/reg/?_rdr";
+
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
+            wait.Until(ExpectedConditions.ElementToBeClickable(By.CssSelector("div._10.uiLayer._4-hy._3qw > div._59s7._9l2g > div > div > div > div > div:nth-child(3) > div.x1exxf4d.x13fuv20.x178xt8z.x1l90r2v.x1pi30zi.x1swvt13 > div > div:nth-child(2)")));
+            IWebElement acceptCookiesButton = driver.FindElement(By.CssSelector("div._10.uiLayer._4-hy._3qw > div._59s7._9l2g > div > div > div > div > div:nth-child(3) > div.x1exxf4d.x13fuv20.x178xt8z.x1l90r2v.x1pi30zi.x1swvt13 > div > div:nth-child(2)"));
+            acceptCookiesButton.Click();
+
+            wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("select[name='birthday_month']")));
+            IWebElement birthdayMonthSelect = driver.FindElement(By.CssSelector("select[name='birthday_month']"));
+
+            SelectElement selectElement = new SelectElement(birthdayMonthSelect);
+
+            selectElement.SelectByValue("1");
+        }
+
+
+
+        [Test, Category("Smoke Testing")]
         public void TestMethod1()
         {
-            IWebElement emailTextField = driver.FindElement(By.XPath(".//*[@id='email']"));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("input#email")));
+            IWebElement emailTextField = driver.FindElement(By.CssSelector("input#email"));
             emailTextField.SendKeys("Selenium C#");
-
-            driver.Url = "https://m.facebook.com/reg/?privacy_mutation_token=eyJ0eXBlIjowLCJjcmVhdGlvbl90aW1lIjoxNzE4MTI4MTQwLCJjYWxsc2l0ZV9pZCI6MjY5NTQ4NDUzMDcyMDk1MX0%3D";
-
-            IWebElement monthDropdownList = driver.FindElement(By.XPath(".//*[@id='month']"));
-            SelectElement element = new SelectElement(monthDropdownList);
-
-            element.SelectByIndex(1); // Select by index
-            element.SelectByText("mar"); // Select by text
-            element.SelectByValue("6"); // Select by value
         }
 
         [Test, Category("Regression Testing")]

@@ -48,6 +48,10 @@ namespace SeleniumCSharpTutorials
 
             SelectElement selectElement = new SelectElement(birthdayMonthSelect);
 
+            selectElement.SelectByIndex(8);
+            Thread.Sleep(2000);
+            selectElement.SelectByText("mar");
+            Thread.Sleep(2000);
             selectElement.SelectByValue("1");
         }
 

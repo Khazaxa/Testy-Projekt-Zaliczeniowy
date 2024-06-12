@@ -49,12 +49,16 @@
   <ItemGroup>
     <Compile Include="BaseClass\BaseTest.cs" />
     <Compile Include="OrderSkipAttribute.cs" />
+    <Compile Include="SeleniumCSharpTutorial04.cs" />
     <Compile Include="Utilities\BrowserUtility.cs" />
     <Compile Include="ParallelTesting.cs" />
     <Compile Include="TestClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Screenshots\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
